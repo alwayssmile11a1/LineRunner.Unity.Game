@@ -57,7 +57,7 @@ namespace LineRunner
                 m_StateDict.Add(states[i].GetName(), states[i]);
             }
 
-            PushState(states[0].GetName());
+            //PushState(states[0].GetName());
         }
 
 
