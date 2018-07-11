@@ -1,10 +1,8 @@
-﻿#if UNITY_ADS
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Advertisements;
+﻿using UnityEngine;
 using UnityEngine.Events;
-
+#if UNITY_ADS
+using UnityEngine.Advertisements;
+#endif
 public class AdvertisementManager : MonoBehaviour
 {
 
@@ -30,6 +28,8 @@ public class AdvertisementManager : MonoBehaviour
     }
     protected static AdvertisementManager m_Instance;
     #endregion
+
+#if UNITY_ADS
 
     [Header("Skippable Ads")]
     public UnityEvent OnSkippableAdsInitalized;
@@ -149,7 +149,9 @@ public class AdvertisementManager : MonoBehaviour
                 OnRewardedAdsFailed.Invoke();
                 break;
         }
+
     }
 
-}
 #endif
+
+}
