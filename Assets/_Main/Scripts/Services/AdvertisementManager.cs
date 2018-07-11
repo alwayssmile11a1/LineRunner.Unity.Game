@@ -6,7 +6,7 @@ using UnityEngine.Advertisements;
 public class AdvertisementManager : MonoBehaviour
 {
 
-#region Static
+    #region Static
     public static AdvertisementManager Instance
     {
         get
