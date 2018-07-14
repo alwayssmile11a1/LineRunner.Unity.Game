@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Gamekit2D;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Flicker : MonoBehaviour {

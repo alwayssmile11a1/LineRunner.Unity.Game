@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 /// <summary>
 /// Serializable data
-/// For the ease of use, use SavedData instead 
+/// For the ease of use, use DataSaver instead 
 /// </summary>
 [System.Serializable]
 public class SerializableSavedData
@@ -38,7 +37,7 @@ public class SerializableVector3
 
 }
 
-public class SavedData
+public class DataSaver
 {
     protected Dictionary<string, string> m_StringSavedData;
     protected Dictionary<string, bool> m_BoolSavedData;
@@ -47,7 +46,7 @@ public class SavedData
     protected Dictionary<string, SerializableVector3> m_Vector3SavedData;
 
 
-    public SavedData()
+    public DataSaver()
     {
         m_StringSavedData = new Dictionary<string, string>();
         m_BoolSavedData = new Dictionary<string, bool>();
