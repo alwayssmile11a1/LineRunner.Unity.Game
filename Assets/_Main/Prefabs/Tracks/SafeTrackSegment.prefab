@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8f74886146a5141a242344fa83578a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPoint: {fileID: 4883785904780260}
-  EndPoint: {fileID: 4955471833876206}
+  startPoint: {fileID: 4883785904780260}
+  endPoint: {fileID: 4955471833876206}
 --- !u!212 &212112464609403356
 SpriteRenderer:
   m_ObjectHideFlags: 1

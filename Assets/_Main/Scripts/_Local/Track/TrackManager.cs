@@ -31,6 +31,26 @@ namespace LineRunner
         #endregion
 
 
+
+        public TrackSegment trackSegments;
+
+
+        //the minimum number of segments at a time
+        protected int m_MinSegmentCount = 5;
+        //the maximum number of safe segments at the beginning of track
+        protected int m_MaxSafeSegmentCount = 2;
+
+
+
+        //list of current segments
+        protected List<TrackSegment> m_CurrentSegments = new List<TrackSegment>();
+
+
+        private int m_CurrentSafeSegmentCount = 0;
+        private TrackSegment m_CurrentSegment;
+
+
+
         protected void Awake()
         {
             if (Instance != this)
@@ -43,6 +63,11 @@ namespace LineRunner
         // Update is called once per frame
         protected void Update()
         {
+            while(m_CurrentSegments.Count < m_MinSegmentCount)
+            {
+
+            }
+
 
         }
 
@@ -50,6 +75,13 @@ namespace LineRunner
 
         protected void SpawnNewSegment()
         {
+            if(m_CurrentSafeSegmentCount < m_MaxSafeSegmentCount)
+            {
+
+                m_CurrentSafeSegmentCount++;
+            }
+
+
 
         }
 
