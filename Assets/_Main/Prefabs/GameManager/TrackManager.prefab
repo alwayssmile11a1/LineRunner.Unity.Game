@@ -9,50 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1551465907155342}
+  m_RootGameObject: {fileID: 1381949739818360}
   m_IsPrefabAsset: 1
---- !u!1 &1551465907155342
+--- !u!1 &1381949739818360
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4541899575762980}
-  - component: {fileID: 114120245685595152}
-  m_Layer: 9
-  m_Name: LineDrawer
+  - component: {fileID: 4520779811642876}
+  - component: {fileID: 114914762030315708}
+  m_Layer: 0
+  m_Name: TrackManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4541899575762980
+--- !u!4 &4520779811642876
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1551465907155342}
+  m_GameObject: {fileID: 1381949739818360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.21, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114120245685595152
+--- !u!114 &114914762030315708
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1551465907155342}
+  m_GameObject: {fileID: 1381949739818360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ce8f2a2c50cf99489a01573052a7004, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a4688b3fe40d544db78cf038f4dd0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undrawableLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  linePrefab: {fileID: 114019263644005658, guid: 5cc7ff28e311a3648ac6e297aa81c85e,
-    type: 2}

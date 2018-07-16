@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    FloatReference playerHealth;
+
+
     public float speed = 5f;
 
 

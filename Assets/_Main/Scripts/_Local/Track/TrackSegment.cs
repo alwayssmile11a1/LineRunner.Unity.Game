@@ -7,6 +7,13 @@ namespace LineRunner
     public class TrackSegment : MonoBehaviour
     {
 
+
+
+        [Header("Path")]
+        public Transform StartPoint;
+        public Transform EndPoint;
+
+
         // Use this for initialization
         void Start()
         {

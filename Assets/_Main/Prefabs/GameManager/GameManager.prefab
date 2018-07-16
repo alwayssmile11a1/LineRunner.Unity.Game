@@ -52,10 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85e1327aca31ec4b83303755443b7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
-  player: {fileID: 0}
-  obstacles:
-  - {fileID: 1817252571513262, guid: 81ead7b97a8cc0041a86ad28e8a7830b, type: 2}
+  states: []
 --- !u!114 &114910005794871306
 MonoBehaviour:
   m_ObjectHideFlags: 1
