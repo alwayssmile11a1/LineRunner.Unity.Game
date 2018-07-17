@@ -7,6 +7,7 @@ namespace LineRunner
     public class LineDrawer : MonoBehaviour
     {
 
+        #region Static
         public static LineDrawer Instance
         {
             get
@@ -28,14 +29,14 @@ namespace LineRunner
         }
 
         private static LineDrawer m_Instance;
-
+        #endregion
 
         public Line linePrefab;
 
-
-
         private Line m_CurrentLine;
         private List<Line> m_Lines = new List<Line>();
+        private Camera mainCam;
+
 
 
         // Use this for initialization
@@ -45,9 +46,10 @@ namespace LineRunner
             if (Instance != this)
             {
                 Destroy(gameObject);
+                return;
             }
 
-
+            mainCam = Camera.main;
         }
 
 
@@ -93,7 +95,7 @@ namespace LineRunner
             if (m_CurrentLine == null) return;
 
 
-            Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 newPosition = mainCam.ScreenToWorldPoint(Input.mousePosition);
             newPosition.z = 0;
             m_CurrentLine.AddDrawingPoint(newPosition);
 

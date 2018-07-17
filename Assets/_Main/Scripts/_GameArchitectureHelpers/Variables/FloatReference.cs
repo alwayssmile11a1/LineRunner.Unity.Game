@@ -13,7 +13,7 @@ public class FloatReference
     public FloatReference(float value)
     {
         UseConstant = true;
-        ConstantValue = value;
+        ConstantValue = value;        
     }
 
     public float Value

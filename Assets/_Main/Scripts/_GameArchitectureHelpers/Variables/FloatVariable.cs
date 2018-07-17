@@ -29,4 +29,10 @@ public class FloatVariable : ScriptableObject
     {
         Value += amount.Value;
     }
+
+    public static implicit operator float(FloatVariable floatVariable)
+    {
+        return floatVariable.Value;
+    }
+
 }

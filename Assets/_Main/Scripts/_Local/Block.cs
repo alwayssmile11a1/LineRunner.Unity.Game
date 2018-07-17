@@ -9,10 +9,17 @@ public class Block : MonoBehaviour {
     public float fadeSpeed = 2f;
     public float xOffset = -1f;
 
-	private void Update () {
+    private Camera mainCam;
+
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
+
+    private void Update () {
 		
         //Disappear when out of view
-        if(Camera.main.transform.position.x - Camera.main.orthographicSize * Camera.main.aspect - transform.position.x > xOffset)
+        if(mainCam.transform.position.x - mainCam.orthographicSize * mainCam.aspect - transform.position.x > xOffset)
         {
             Disappear();
         }

@@ -30,6 +30,19 @@ namespace Gamekit2D
         }
     }
 
+    public static class CameraExtension
+    {
+        /// <summary>
+        /// Half width of camera when in orthographic mode
+        /// </summary>
+        /// <param name="cam"></param>
+        /// <returns></returns>
+        public static float GetHalfCameraWidth(this Camera cam)
+        {
+            return cam.orthographicSize * cam.aspect;
+        }
+    }
+
     public static class TransformExtension
     {
         public static Bounds TransformBounds(this Transform transform, Bounds localBounds)
