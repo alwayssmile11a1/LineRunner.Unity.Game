@@ -34,10 +34,10 @@ namespace LineRunner
         [Tooltip("Safe segment at the very beginning of the track")]
         public TrackSegment safeSegment;
         public TrackSegment[] trackSegments;
-      
+
         [Header("Variables")]
-
-
+        public FloatReference floatVariable;
+        public StringReference stringVariable;
 
         //the minimum number of segments at a time
         protected int m_MinSegmentCount = 4;

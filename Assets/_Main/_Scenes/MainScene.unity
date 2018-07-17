@@ -466,6 +466,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114914762030315708, guid: 5d38dbcc06ec04a41bb70a1406ca2d16,
+        type: 2}
+      propertyPath: floatVariable.UseConstant
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114914762030315708, guid: 5d38dbcc06ec04a41bb70a1406ca2d16,
+        type: 2}
+      propertyPath: floatVariable.ConstantValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114914762030315708, guid: 5d38dbcc06ec04a41bb70a1406ca2d16,
+        type: 2}
+      propertyPath: stringVariable.UseConstant
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d38dbcc06ec04a41bb70a1406ca2d16, type: 2}
   m_IsPrefabAsset: 0
