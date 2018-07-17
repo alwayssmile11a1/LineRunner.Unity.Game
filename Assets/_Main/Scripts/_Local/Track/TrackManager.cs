@@ -42,7 +42,7 @@ namespace LineRunner
         //the minimum number of segments at a time
         protected int m_MinSegmentCount = 4;
         //the maximum number of safe segments at the beginning of track
-        protected int m_MaxSafeSegmentCount = 2;
+        protected int m_MaxSafeSegmentCount = 3;
         //the maximum countdown time
         protected int m_MaxCountDownTimer = 3;
         // If this is set to -1, random seed is init to system clock, otherwise init to that value
@@ -65,7 +65,6 @@ namespace LineRunner
                 Destroy(gameObject);
                 return;
             }
-
         }
 
         // Update is called once per frame
@@ -74,9 +73,7 @@ namespace LineRunner
             while(m_CurrentSegments.Count < m_MinSegmentCount)
             {
                 SpawnNewSegment();
-            }
-
-
+            }   
 
         }
 

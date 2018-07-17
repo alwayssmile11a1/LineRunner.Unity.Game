@@ -8,6 +8,7 @@ public class FloatVariable : ScriptableObject
     [Multiline]
     public string DeveloperDescription = "";
 #endif
+
     public float Value;
 
     public void SetValue(float value)
