@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 989da390d879eca4982b57f7d4f8e9c9, type: 3}
-  m_Name: PlayerHealth
+  m_Script: {fileID: 11500000, guid: 5048b93517d2eec4585a88adcb4ad1ce, type: 3}
+  m_Name: Score
   m_EditorClassIdentifier: 
-  DeveloperDescription: 
-  Value: 1
+  DeveloperDescription: Score to display
+  Value: 280

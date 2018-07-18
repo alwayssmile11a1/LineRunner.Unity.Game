@@ -42,19 +42,19 @@ public class Line : MonoBehaviour {
 
     protected void OnEnable()
     {
-        //Renew();
+        Renew();
     }
 
     public void RemoveSelf()
     {
-        //if (linePoolObject != null)
-        //{
-        //    linePoolObject.ReturnToPool();
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
+        if (linePoolObject != null)
+        {
+            linePoolObject.ReturnToPool();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Renew()
@@ -184,7 +184,7 @@ public class Line : MonoBehaviour {
 
             if (rightestPosition.x < position.x)
             {
-                position = RendereredLine.GetPosition(i);
+                rightestPosition = position;
             }
 
         }

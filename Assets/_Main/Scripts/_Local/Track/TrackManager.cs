@@ -35,9 +35,9 @@ namespace LineRunner
         public TrackSegment safeSegment;
         public TrackSegment[] trackSegments;
 
-        [Header("Variables")]
-        public FloatReference floatVariable;
-        public StringReference stringVariable;
+        //[Header("Variables")]
+        //public FloatReference floatVariable;
+        //public StringReference stringVariable;
 
         //the minimum number of segments at a time
         protected int m_MinSegmentCount = 4;
@@ -144,8 +144,10 @@ namespace LineRunner
                 m_CurrentSegment = poolObject.transform.GetComponent<TrackSegment>();
                 m_CurrentSegment.poolObject = poolObject;
 
-                //Spawn obstacle
-                SpawnObstacle(m_CurrentSegment);
+                //Setup obstacles
+                m_CurrentSegment.SetupObstacles();
+
+                
             }
 
             //Add to list
@@ -153,13 +155,6 @@ namespace LineRunner
 
         }
         
-        protected void SpawnObstacle(TrackSegment trackSegment)
-        {
-
-
-
-
-        }
 
         /// <summary>
         /// Check and remove out-of-view segment

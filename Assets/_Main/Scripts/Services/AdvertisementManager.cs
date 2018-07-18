@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 #if UNITY_ADS
 using UnityEngine.Advertisements;
 #endif
@@ -47,9 +48,8 @@ public class AdvertisementManager : MonoBehaviour
     public UnityEvent OnRewardedAdsFailed;
 
 
-
-    protected bool m_SkippableAdsInitializing = false;
-    protected bool m_RewardedAdsInitializing = false;
+    //protected bool m_SkippableAdsInitializing = false;
+    //protected bool m_RewardedAdsInitializing = false;
 
     protected readonly string m_RewardedAdsPlacementID = "rewardedVideo";
 
@@ -65,21 +65,59 @@ public class AdvertisementManager : MonoBehaviour
 
     }
 
-    public void Update()
+    //public void Update()
+    //{
+    //    if (m_SkippableAdsInitializing && Advertisement.IsReady())
+    //    {
+    //        OnSkippableAdsInitalized.Invoke();
+    //        m_SkippableAdsInitializing = false;
+    //    }
+
+    //    if (m_RewardedAdsInitializing && Advertisement.IsReady(m_RewardedAdsPlacementID))
+    //    {
+    //        OnRewardedAdsInitalized.Invoke();
+    //        m_RewardedAdsInitializing = false;
+    //    }
+
+    //}
+
+    //public bool IsInitializingRewardedAds()
+    //{
+    //    return m_RewardedAdsInitializing;
+    //}
+
+    //public bool IsInitializingSkippableAds()
+    //{
+    //    return m_SkippableAdsInitializing;
+    //}
+
+    private IEnumerator WaitForInitializing(string placementID = "")
     {
-        if (m_SkippableAdsInitializing && Advertisement.IsReady())
+        if (!placementID.Equals(""))
         {
-            OnSkippableAdsInitalized.Invoke();
-            m_SkippableAdsInitializing = false;
+            while (!Advertisement.IsReady(placementID))
+            {
+                yield return null;
+            }
+        }
+        else
+        {
+            while (!Advertisement.IsReady())
+            {
+                yield return null;
+            }
         }
 
-        if (m_RewardedAdsInitializing && Advertisement.IsReady(m_RewardedAdsPlacementID))
+        if (placementID.Equals(m_RewardedAdsPlacementID))
         {
             OnRewardedAdsInitalized.Invoke();
-            m_RewardedAdsInitializing = false;
         }
-        
+        else
+        {
+            OnSkippableAdsInitalized.Invoke();
+        }
     }
+
 
     public void ShowRewardedAds()
     {
@@ -101,22 +139,14 @@ public class AdvertisementManager : MonoBehaviour
 
     public void InitializeRewardedAds()
     {
-        m_RewardedAdsInitializing = true;
+        //m_RewardedAdsInitializing = true;
+        StartCoroutine(WaitForInitializing(m_RewardedAdsPlacementID));
     }
 
     public void InitializeSkippableAds()
     {
-        m_SkippableAdsInitializing = true;
-    }
-
-    public bool IsInitializingRewardedAds()
-    {
-        return m_RewardedAdsInitializing;
-    }
-
-    public bool IsInitializingSkippableAds()
-    {
-        return m_SkippableAdsInitializing;
+        //m_SkippableAdsInitializing = true;
+        StartCoroutine(WaitForInitializing());
     }
 
     protected void HandleSkippableAdsResult(ShowResult result)
