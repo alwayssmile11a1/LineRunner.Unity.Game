@@ -15,46 +15,18 @@ namespace LineRunner
         [HideInInspector]
         public DefaultPoolObject poolObject;
 
-        protected float m_ScreenOffsetError = 0.1f;
 
-        private Camera mainCam;
-
-
-
-        // Use this for initialization
-        protected void Awake()
+        public void RemoveSelf()
         {
-            mainCam = Camera.main;
-        }
-
-
-        protected void OnEnable()
-        {
-
-        }
-
-        // Update is called once per frame
-        protected void Update()
-        {
-            //Return to pool when out of view
-            if(mainCam.transform.position.x - mainCam.GetHalfCameraWidth() - endPoint.position.x > m_ScreenOffsetError)
+            if (poolObject != null)
             {
-                if (poolObject != null)
-                {
-                    poolObject.ReturnToPool();
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
-
-                TrackManager.Instance.RemoveFromCurrentSegments(this);
+                poolObject.ReturnToPool();
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
-
-
-
-
 
     }
 }

@@ -77,6 +77,8 @@ MonoBehaviour:
   maxLinePointCount: 2
   distanceBetweenLinePosition: 0.1
   colliderThickness: 0.1
+  lineColliderSegment: {fileID: 70952670903796072, guid: 6c60cbaec5925db4fa1991884f8d3993,
+    type: 2}
 --- !u!120 &120060523909648802
 LineRenderer:
   m_ObjectHideFlags: 1

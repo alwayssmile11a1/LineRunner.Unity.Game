@@ -45,12 +45,16 @@ namespace LineRunner
         protected int m_MaxSafeSegmentCount = 3;
         //the maximum countdown time
         protected int m_MaxCountDownTimer = 3;
-        // If this is set to -1, random seed is init to system clock, otherwise init to that value
-        // Allow to play the same game multiple time (useful to make specific competition/challenge fair between players)
+        //If this is set to -1, random seed is init to system clock, otherwise init to that value
+        //Allow to play the same game multiple time (useful to make specific competition/challenge fair between players)
         protected int m_TrackSeed = -1;
+        //offset used to remove out-of-view segment
+        protected float m_ScreenOffsetError = 0.1f;
         //list of current segments
         protected List<TrackSegment> m_CurrentSegments = new List<TrackSegment>();
 
+
+        private Camera mainCamera;
         private int m_CurrentSafeSegmentCount = 0;
         private TrackSegment m_CurrentSegment = null;
         private bool m_IsRunning = false;
@@ -65,6 +69,9 @@ namespace LineRunner
                 Destroy(gameObject);
                 return;
             }
+
+            mainCamera = Camera.main;
+
         }
 
         // Update is called once per frame
@@ -73,7 +80,10 @@ namespace LineRunner
             while(m_CurrentSegments.Count < m_MinSegmentCount)
             {
                 SpawnNewSegment();
-            }   
+            }
+
+
+            CheckOutOfViewSegment();
 
         }
 
@@ -101,7 +111,6 @@ namespace LineRunner
             if (m_CurrentSafeSegmentCount < m_MaxSafeSegmentCount)
             {
                 segmentToUse = safeSegment;
-                m_CurrentSafeSegmentCount++;
             }
             else
             {
@@ -121,17 +130,21 @@ namespace LineRunner
                 spawnPosition = m_CurrentSegment.endPoint.position + (segmentToUse.transform.position - segmentToUse.startPoint.position);
             }
 
-            //Spawn segment
-            if (segmentToUse == safeSegment)
+            //Spawn safe segment
+            if (m_CurrentSafeSegmentCount < m_MaxSafeSegmentCount)
             {
                 m_CurrentSegment = Instantiate(segmentToUse, spawnPosition, Quaternion.identity, transform);
+                m_CurrentSafeSegmentCount++;
             }
+            else //Spawn normal segment and obstacles
             {
-                DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(segmentToUse.gameObject, 2);
+                //Spawn segment by object pool
+                DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(segmentToUse.gameObject, 1);
                 DefaultPoolObject poolObject = poolToUse.Pop(spawnPosition);
                 m_CurrentSegment = poolObject.transform.GetComponent<TrackSegment>();
                 m_CurrentSegment.poolObject = poolObject;
 
+                //Spawn obstacle
                 SpawnObstacle(m_CurrentSegment);
             }
 
@@ -148,9 +161,23 @@ namespace LineRunner
 
         }
 
-        public void RemoveFromCurrentSegments(TrackSegment trackSegment)
+        /// <summary>
+        /// Check and remove out-of-view segment
+        /// </summary>
+        public void CheckOutOfViewSegment()
         {
-            m_CurrentSegments.Remove(trackSegment);
+            if (m_CurrentSegments.Count == 0) return;
+
+            //Just have to check the first segment
+            TrackSegment segmentToCheck = m_CurrentSegments[0];
+
+            //Return to pool when out of view
+            if (mainCamera.transform.position.x - mainCamera.GetHalfCameraWidth() - segmentToCheck.endPoint.position.x > m_ScreenOffsetError)
+            {
+                segmentToCheck.RemoveSelf();
+                m_CurrentSegments.Remove(segmentToCheck);
+            }
+
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gamekit2D;
 
 namespace LineRunner
 {
@@ -33,10 +34,14 @@ namespace LineRunner
 
         public Line linePrefab;
 
-        private Line m_CurrentLine;
-        private List<Line> m_Lines = new List<Line>();
-        private Camera mainCam;
+        protected float m_ScreenOffsetError = 0.1f;
 
+
+        protected Line m_CurrentLine;
+        protected List<Line> m_Lines = new List<Line>();
+        protected DefaultObjectPool m_LinePool;
+
+        private Camera mainCamera;
 
 
         // Use this for initialization
@@ -49,7 +54,10 @@ namespace LineRunner
                 return;
             }
 
-            mainCam = Camera.main;
+            mainCamera = Camera.main;
+
+            m_LinePool = DefaultObjectPool.GetObjectPool(linePrefab.gameObject, 2);
+
         }
 
 
@@ -70,6 +78,22 @@ namespace LineRunner
                 EndDrawing();
             }
 
+            CheckOutOfViewLine();
+
+        }
+
+
+        protected void CheckOutOfViewLine()
+        {
+            for (int i = 0; i < m_Lines.Count; i++)
+            {
+                //Return to pool when out of view
+                if (mainCamera.transform.position.x - mainCamera.GetHalfCameraWidth() - m_Lines[i].CalculateRightestPoint().x > m_ScreenOffsetError)
+                {
+                    m_Lines[i].RemoveSelf();
+                    m_Lines.Remove(m_Lines[i]);
+                }
+            }
 
         }
 
@@ -78,12 +102,15 @@ namespace LineRunner
         {
             if (m_CurrentLine == null)
             {
-                m_CurrentLine = Instantiate(linePrefab);
+
+                DefaultPoolObject poolObject = m_LinePool.Pop(Vector3.zero);
+                m_CurrentLine = poolObject.transform.GetComponent<Line>();
+                m_CurrentLine.linePoolObject = poolObject;
                 m_Lines.Add(m_CurrentLine);
             }
             else
             {
-                m_CurrentLine.lineRenderer.positionCount = 0;
+                m_CurrentLine.Renew();
             }
 
         }
@@ -95,7 +122,7 @@ namespace LineRunner
             if (m_CurrentLine == null) return;
 
 
-            Vector3 newPosition = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 newPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             newPosition.z = 0;
             m_CurrentLine.AddDrawingPoint(newPosition);
 
@@ -103,25 +130,7 @@ namespace LineRunner
 
         public void EndDrawing()
         {
-            switch (m_CurrentLine.lineType)
-            {
-                case Line.LineType.Dynamic:
-                    {
-                        m_CurrentLine.rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-                        break;
-                    }
-                case Line.LineType.Kinematic:
-                    {
-                        m_CurrentLine.rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
-                        break;
-                    }
-                case Line.LineType.Static:
-                    {
-                        m_CurrentLine.rigidbody2D.bodyType = RigidbodyType2D.Static;
-                        break;
-                    }
-
-            }
+            m_CurrentLine.EndDrawing();
 
             m_CurrentLine = null;
         }
@@ -131,7 +140,7 @@ namespace LineRunner
         {
             for (int i = 0; i < m_Lines.Count; i++)
             {
-                m_Lines[i].rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+                m_Lines[i].LineBody2D.bodyType = RigidbodyType2D.Kinematic;
             }
         }
 
@@ -139,7 +148,7 @@ namespace LineRunner
         {
             for (int i = 0; i < m_Lines.Count; i++)
             {
-                if (!m_Lines[i].rigidbody2D.IsSleeping())
+                if (!m_Lines[i].LineBody2D.IsSleeping())
                 {
                     return false;
                 }
@@ -163,22 +172,22 @@ namespace LineRunner
             return m_CurrentLine;
         }
 
-        public Vector3 GetHighestPoint()
+        public Vector3 CalculateHighestPoint()
         {
-            if (m_Lines.Count == 0 || m_Lines[0].lineRenderer.positionCount == 0)
+            if (m_Lines.Count == 0 || m_Lines[0].RendereredLine.positionCount == 0)
             {
                 Debug.LogError("Nothing in the list");
             }
 
-            Vector3 max = m_Lines[0].transform.TransformPoint(m_Lines[0].lineRenderer.GetPosition(0));
+            Vector3 max = m_Lines[0].transform.TransformPoint(m_Lines[0].RendereredLine.GetPosition(0));
 
             for (int i = 0; i < m_Lines.Count; i++)
             {
 
-                for (int j = 0; j < m_Lines[i].lineRenderer.positionCount; j++)
+                for (int j = 0; j < m_Lines[i].RendereredLine.positionCount; j++)
                 {
 
-                    Vector3 currentPoint = m_Lines[i].transform.TransformPoint(m_Lines[i].lineRenderer.GetPosition(j));
+                    Vector3 currentPoint = m_Lines[i].transform.TransformPoint(m_Lines[i].RendereredLine.GetPosition(j));
 
                     if (max.y < currentPoint.y)
                     {
