@@ -252,6 +252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4883785904780260}
   endPoint: {fileID: 4955471833876206}
+  possibleObstacles: []
+  possibleObstaclePositions: []
 --- !u!212 &212112464609403356
 SpriteRenderer:
   m_ObjectHideFlags: 1

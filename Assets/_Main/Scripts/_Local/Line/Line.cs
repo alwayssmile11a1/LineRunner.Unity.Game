@@ -89,7 +89,7 @@ public class Line : MonoBehaviour {
                 {
                     RendereredLine.positionCount++;
                     RendereredLine.SetPosition(RendereredLine.positionCount - 1, position);
-                    CapsuleCollider2D capsule = CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, null);
+                    CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, null);
                 }
                 else //modify line point
                 {

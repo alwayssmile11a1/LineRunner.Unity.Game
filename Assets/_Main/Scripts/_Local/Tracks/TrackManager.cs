@@ -53,7 +53,6 @@ namespace LineRunner
         //list of current segments
         protected List<TrackSegment> m_CurrentSegments = new List<TrackSegment>();
 
-
         private Camera mainCamera;
         private int m_CurrentSafeSegmentCount = 0;
         private TrackSegment m_CurrentSegment = null;
@@ -144,17 +143,32 @@ namespace LineRunner
                 m_CurrentSegment = poolObject.transform.GetComponent<TrackSegment>();
                 m_CurrentSegment.poolObject = poolObject;
 
-                //Setup obstacles
-                m_CurrentSegment.SetupObstacles();
-
-                
+                //Spawn obstacles
+                //SpawnObstacles(m_CurrentSegment);
+                m_CurrentSegment.SpawnObstacles();             
             }
 
             //Add to list
             m_CurrentSegments.Add(m_CurrentSegment);
 
         }
-        
+       
+
+        ////public void SpawnObstacles(TrackSegment trackSegment)
+        ////{
+
+        ////    if (trackSegment.possibleObstacles.Length == 0 || trackSegment.possibleObstaclePositions.Length == 0) return;
+
+        ////    Obstacle obstacleToUse = trackSegment.possibleObstacles[Random.Range(0, trackSegment.possibleObstacles.Length)];
+        ////    float positionToUse = trackSegment.possibleObstaclePositions[Random.Range(0, trackSegment.possibleObstaclePositions.Length)];
+
+        ////    //Spawn obstacle from pool
+        ////    DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(obstacleToUse.gameObject, 2);
+        ////    DefaultPoolObject obstacleObject = poolToUse.Pop((trackSegment.endPoint.position - trackSegment.startPoint.position) * positionToUse + trackSegment.startPoint.position);
+        ////    Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
+        ////    obstacle.poolObject = obstacleObject;
+
+        ////}
 
         /// <summary>
         /// Check and remove out-of-view segment
@@ -172,9 +186,7 @@ namespace LineRunner
                 segmentToCheck.RemoveSelf();
                 m_CurrentSegments.Remove(segmentToCheck);
             }
-
         }
-
 
 
         public void BeginTrack()
