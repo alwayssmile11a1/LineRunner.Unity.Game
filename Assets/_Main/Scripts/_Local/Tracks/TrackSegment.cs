@@ -34,6 +34,7 @@ namespace LineRunner
             DefaultPoolObject obstacleObject = poolToUse.Pop((endPoint.position - startPoint.position) * positionToUse + startPoint.position);
             Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
             obstacle.poolObject = obstacleObject;
+            obstacle.Spawn();
             m_Obstacles.Add(obstacle);
         }
 

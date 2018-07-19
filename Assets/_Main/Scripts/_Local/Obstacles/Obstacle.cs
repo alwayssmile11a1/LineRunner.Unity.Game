@@ -7,6 +7,8 @@ namespace LineRunner
 {
     public class Obstacle : MonoBehaviour
     {
+        
+
         [HideInInspector]
         public DefaultPoolObject poolObject;
 
@@ -21,6 +23,12 @@ namespace LineRunner
             {
                 Destroy(gameObject);
             }
+        }
+
+
+        public virtual void Spawn()
+        {
+
         }
 
     }

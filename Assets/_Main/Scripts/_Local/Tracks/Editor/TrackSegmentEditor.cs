@@ -33,6 +33,7 @@ namespace LineRunner
             if (GUILayout.Button("Add obstacle position"))
             {
                 possibleObstaclePositionsProp.arraySize++;
+                possibleObstaclePositionsProp.GetArrayElementAtIndex(possibleObstaclePositionsProp.arraySize - 1).floatValue = 0.0f;
             }
 
             int toremove = -1;
