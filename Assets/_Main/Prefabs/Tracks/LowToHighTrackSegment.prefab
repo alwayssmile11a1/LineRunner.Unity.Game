@@ -311,7 +311,8 @@ MonoBehaviour:
   endPoint: {fileID: 4557138933871648}
   possibleObstacles:
   - {fileID: 114140610535335754, guid: 83075dacc088855438a5e20c39f4b4cb, type: 2}
-  possibleObstaclePositions: []
+  possibleObstaclePositions:
+  - {x: 0.68, y: 2.12}
 --- !u!114 &114476222505046002
 MonoBehaviour:
   m_ObjectHideFlags: 1

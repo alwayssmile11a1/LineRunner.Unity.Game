@@ -215,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 1179792156070036}
   m_LocalRotation: {x: 0, y: -0, z: 0.9238796, w: -0.38268325}
   m_LocalPosition: {x: -0.1, y: 0.27, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 4489238183253646}
   m_RootOrder: 1
@@ -310,8 +310,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4254805679146302}
   endPoint: {fileID: 4078114896691736}
-  possibleObstacles: []
-  possibleObstaclePositions: []
+  possibleObstacles:
+  - {fileID: 114210464098944532, guid: 74fcfcce3c48a0c448716b36010f4e8b, type: 2}
+  possibleObstaclePositions:
+  - {x: 0.8, y: 7.86}
+  - {x: 0.06, y: 6.31}
 --- !u!212 &212199831718071166
 SpriteRenderer:
   m_ObjectHideFlags: 1

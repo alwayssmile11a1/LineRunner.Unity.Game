@@ -33,7 +33,7 @@ namespace LineRunner
             if (GUILayout.Button("Add obstacle position"))
             {
                 possibleObstaclePositionsProp.arraySize++;
-                possibleObstaclePositionsProp.GetArrayElementAtIndex(possibleObstaclePositionsProp.arraySize - 1).floatValue = 0.0f;
+                possibleObstaclePositionsProp.GetArrayElementAtIndex(possibleObstaclePositionsProp.arraySize - 1).vector2Value = Vector2.zero;
             }
 
             int toremove = -1;
@@ -42,7 +42,7 @@ namespace LineRunner
             {
                 EditorGUILayout.BeginHorizontal();
 
-                EditorGUILayout.Slider(possibleObstaclePositionsProp.GetArrayElementAtIndex(i), 0.0f, 1.0f);
+                EditorGUILayout.PropertyField(possibleObstaclePositionsProp.GetArrayElementAtIndex(i));
                 if (GUILayout.Button("-", GUILayout.MaxWidth(32)))
                     toremove = i;
 

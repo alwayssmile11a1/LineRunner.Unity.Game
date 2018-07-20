@@ -310,9 +310,10 @@ MonoBehaviour:
   endPoint: {fileID: 4934895863750072}
   possibleObstacles:
   - {fileID: 114140610535335754, guid: 83075dacc088855438a5e20c39f4b4cb, type: 2}
+  - {fileID: 114210464098944532, guid: 74fcfcce3c48a0c448716b36010f4e8b, type: 2}
   possibleObstaclePositions:
-  - 0.13
-  - 0.87
+  - {x: 0.51, y: 4.83}
+  - {x: 0.84, y: 0.5}
 --- !u!212 &212335640980559178
 SpriteRenderer:
   m_ObjectHideFlags: 1

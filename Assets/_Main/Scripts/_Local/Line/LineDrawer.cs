@@ -130,6 +130,8 @@ namespace LineRunner
 
         public void EndDrawing()
         {
+            if (m_CurrentLine == null) return;
+
             m_CurrentLine.EndDrawing();
 
             m_CurrentLine = null;

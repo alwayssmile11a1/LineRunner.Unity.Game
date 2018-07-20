@@ -14,7 +14,7 @@ namespace LineRunner
 
         [Header("Obstacles")]
         public Obstacle[] possibleObstacles;
-        public float[] possibleObstaclePositions;
+        public Vector2[] possibleObstaclePositions;
 
         [HideInInspector]
         public DefaultPoolObject poolObject;
@@ -27,11 +27,11 @@ namespace LineRunner
             if (possibleObstacles.Length == 0 || possibleObstaclePositions.Length == 0) return;
 
             Obstacle obstacleToUse = possibleObstacles[Random.Range(0, possibleObstacles.Length)];
-            float positionToUse = possibleObstaclePositions[Random.Range(0, possibleObstaclePositions.Length)];
+            Vector2 positionToUse = possibleObstaclePositions[Random.Range(0, possibleObstaclePositions.Length)];
 
             //Spawn obstacle from pool
             DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(obstacleToUse.gameObject, 1);
-            DefaultPoolObject obstacleObject = poolToUse.Pop((endPoint.position - startPoint.position) * positionToUse + startPoint.position);
+            DefaultPoolObject obstacleObject = poolToUse.Pop((endPoint.position - startPoint.position)* positionToUse.x + Vector3.up * positionToUse.y + startPoint.position);
             Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
             obstacle.poolObject = obstacleObject;
             obstacle.Spawn();
@@ -65,7 +65,7 @@ namespace LineRunner
             Gizmos.color = Color.green;
             for (int i = 0; i < possibleObstaclePositions.Length; i++)
             {
-                Gizmos.DrawSphere((endPoint.position - startPoint.position) * possibleObstaclePositions[i] + startPoint.position, 0.5f);
+                Gizmos.DrawSphere((endPoint.position - startPoint.position) * possibleObstaclePositions[i].x + Vector3.up * possibleObstaclePositions[i].y + startPoint.position, 0.5f);
             }
         }
         #endif
