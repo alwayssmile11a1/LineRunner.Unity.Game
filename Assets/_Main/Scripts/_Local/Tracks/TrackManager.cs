@@ -30,9 +30,7 @@ namespace LineRunner
         protected static TrackManager m_Instance;
         #endregion
 
-        [Header("Segments")]
-        [Tooltip("Safe segment at the very beginning of the track")]
-        public TrackSegment safeSegment;
+        [Tooltip("a collection of segments. Note that a safe segment should at the beginning of the list")]
         public TrackSegment[] trackSegments;
 
         //[Header("Variables")]
@@ -105,11 +103,14 @@ namespace LineRunner
 
             //Spawn segment
             TrackSegment segmentToUse;
+            bool spawnObstacles = true;
 
             //Use safe segment
             if (m_CurrentSafeSegmentCount < m_MaxSafeSegmentCount)
             {
-                segmentToUse = safeSegment;
+                segmentToUse = trackSegments[0];
+                m_CurrentSafeSegmentCount++;
+                spawnObstacles = false;
             }
             else
             {
@@ -129,46 +130,21 @@ namespace LineRunner
                 spawnPosition = m_CurrentSegment.endPoint.position + (segmentToUse.transform.position - segmentToUse.startPoint.position);
             }
 
-            //Spawn safe segment
-            if (m_CurrentSafeSegmentCount < m_MaxSafeSegmentCount)
+            //Spawn segment from object pool
+            DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(segmentToUse.gameObject, 1);
+            DefaultPoolObject poolObject = poolToUse.Pop(spawnPosition);
+            m_CurrentSegment = poolObject.transform.GetComponent<TrackSegment>();
+            m_CurrentSegment.poolObject = poolObject;
+            //Spawn obstacles
+            if (spawnObstacles)
             {
-                m_CurrentSegment = Instantiate(segmentToUse, spawnPosition, Quaternion.identity, transform);
-                m_CurrentSafeSegmentCount++;
-            }
-            else //Spawn normal segment and obstacles
-            {
-                //Spawn segment by object pool
-                DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(segmentToUse.gameObject, 1);
-                DefaultPoolObject poolObject = poolToUse.Pop(spawnPosition);
-                m_CurrentSegment = poolObject.transform.GetComponent<TrackSegment>();
-                m_CurrentSegment.poolObject = poolObject;
-
-                //Spawn obstacles
-                //SpawnObstacles(m_CurrentSegment);
-                m_CurrentSegment.SpawnObstacles();             
+                m_CurrentSegment.SpawnObstacles();
             }
 
             //Add to list
             m_CurrentSegments.Add(m_CurrentSegment);
 
         }
-       
-
-        ////public void SpawnObstacles(TrackSegment trackSegment)
-        ////{
-
-        ////    if (trackSegment.possibleObstacles.Length == 0 || trackSegment.possibleObstaclePositions.Length == 0) return;
-
-        ////    Obstacle obstacleToUse = trackSegment.possibleObstacles[Random.Range(0, trackSegment.possibleObstacles.Length)];
-        ////    float positionToUse = trackSegment.possibleObstaclePositions[Random.Range(0, trackSegment.possibleObstaclePositions.Length)];
-
-        ////    //Spawn obstacle from pool
-        ////    DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(obstacleToUse.gameObject, 2);
-        ////    DefaultPoolObject obstacleObject = poolToUse.Pop((trackSegment.endPoint.position - trackSegment.startPoint.position) * positionToUse + trackSegment.startPoint.position);
-        ////    Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
-        ////    obstacle.poolObject = obstacleObject;
-
-        ////}
 
         /// <summary>
         /// Check and remove out-of-view segment

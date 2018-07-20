@@ -110,7 +110,7 @@ namespace LineRunner
             }
             else
             {
-                m_CurrentLine.Renew();
+                m_CurrentLine.ReInitialize();
             }
 
         }

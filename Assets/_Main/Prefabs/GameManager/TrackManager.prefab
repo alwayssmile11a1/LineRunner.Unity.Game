@@ -51,16 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a4688b3fe40d544db78cf038f4dd0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  safeSegment: {fileID: 114337092723838428, guid: d4ef8376fd66bfc40a19a172eb02a62c,
-    type: 2}
   trackSegments:
-  - {fileID: 114337092723838428, guid: d4ef8376fd66bfc40a19a172eb02a62c, type: 2}
-  - {fileID: 114746040552152446, guid: 689ba4d85903f714b8868b453f3c8344, type: 2}
-  floatVariable:
-    UseConstant: 0
-    ConstantValue: 5
-    Variable: {fileID: 11400000, guid: 04841c7fdfa9ad44d81d1da8e1306b45, type: 2}
-  stringVariable:
-    UseConstant: 0
-    ConstantValue: 
-    Variable: {fileID: 0}
+  - {fileID: 114741825683677400, guid: 555fb87be3156c446ae50f80c666d7c5, type: 2}
+  - {fileID: 114451796967687608, guid: 42ec0c543a9ffa64582f483c83b9aadd, type: 2}
+  - {fileID: 114547221908675766, guid: 23caafa4c1130e043b3b7b1a80376caa, type: 2}
+  - {fileID: 114531041304016874, guid: efac0af451401d9419c8ce53732b477f, type: 2}
+  - {fileID: 114381832554127326, guid: 3006e2ceb9730314e9055f83153a4ddf, type: 2}

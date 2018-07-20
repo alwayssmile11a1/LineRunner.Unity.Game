@@ -42,7 +42,7 @@ public class Line : MonoBehaviour {
 
     protected void OnEnable()
     {
-        Renew();
+        ReInitialize();
     }
 
     public void RemoveSelf()
@@ -57,7 +57,7 @@ public class Line : MonoBehaviour {
         }
     }
 
-    public void Renew()
+    public void ReInitialize()
     {
         RendereredLine.positionCount = 0;
 
