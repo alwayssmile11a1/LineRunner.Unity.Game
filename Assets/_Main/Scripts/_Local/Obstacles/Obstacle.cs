@@ -26,7 +26,7 @@ namespace LineRunner
         }
 
 
-        public virtual void Spawn()
+        public virtual void OnSpawn()
         {
 
         }

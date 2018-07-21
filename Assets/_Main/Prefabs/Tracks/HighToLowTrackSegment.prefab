@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1944757981037822
 GameObject:
   m_ObjectHideFlags: 1
@@ -345,8 +345,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4500184523327644}
   endPoint: {fileID: 4503922726764256}
+  minObstacleCount: 0
+  maxObstacleCount: 1
   possibleObstacles:
-  - {fileID: 114140610535335754, guid: 83075dacc088855438a5e20c39f4b4cb, type: 2}
+  - {fileID: 114951174094210828, guid: 83075dacc088855438a5e20c39f4b4cb, type: 2}
   possibleObstaclePositions:
   - {x: 0.33, y: 2.12}
   - {x: 0.85, y: 1.81}

@@ -9,6 +9,8 @@ namespace LineRunner
 
         protected SerializedProperty startPointProp;
         protected SerializedProperty endPointProp;
+        protected SerializedProperty minObstacleProp;
+        protected SerializedProperty maxObstacleProp;
         protected SerializedProperty possibleObstaclesProp;
         protected SerializedProperty possibleObstaclePositionsProp;
 
@@ -16,6 +18,8 @@ namespace LineRunner
         {
             startPointProp = serializedObject.FindProperty("startPoint");
             endPointProp = serializedObject.FindProperty("endPoint");
+            minObstacleProp = serializedObject.FindProperty("minObstacleCount");
+            maxObstacleProp = serializedObject.FindProperty("maxObstacleCount");
             possibleObstaclesProp = serializedObject.FindProperty("possibleObstacles");
             possibleObstaclePositionsProp = serializedObject.FindProperty("possibleObstaclePositions");
         }
@@ -26,9 +30,11 @@ namespace LineRunner
 
             EditorGUILayout.PropertyField(startPointProp);
             EditorGUILayout.PropertyField(endPointProp);
+            EditorGUILayout.PropertyField(minObstacleProp);
+            EditorGUILayout.PropertyField(maxObstacleProp);
             EditorGUILayout.PropertyField(possibleObstaclesProp, true);
 
-
+            EditorGUILayout.Space();
 
             if (GUILayout.Button("Add obstacle position"))
             {
@@ -55,6 +61,11 @@ namespace LineRunner
 
 
             serializedObject.ApplyModifiedProperties();
+
+            if (minObstacleProp.intValue > possibleObstaclePositionsProp.arraySize || maxObstacleProp.intValue > possibleObstaclePositionsProp.arraySize)
+            {
+                EditorGUILayout.HelpBox("the maximum of obstacles is being driven by the size of array of possible positions", MessageType.Warning);
+            }
 
         }
     }

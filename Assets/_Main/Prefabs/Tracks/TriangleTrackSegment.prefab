@@ -310,11 +310,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 4254805679146302}
   endPoint: {fileID: 4078114896691736}
+  minObstacleCount: 0
+  maxObstacleCount: 1
   possibleObstacles:
-  - {fileID: 114210464098944532, guid: 74fcfcce3c48a0c448716b36010f4e8b, type: 2}
+  - {fileID: 114149544015150234, guid: 74fcfcce3c48a0c448716b36010f4e8b, type: 2}
+  - {fileID: 114219016706099720, guid: 771a143b887297b46901b9289f013aa2, type: 2}
   possibleObstaclePositions:
-  - {x: 0.8, y: 7.86}
-  - {x: 0.06, y: 6.31}
+  - {x: 0.9, y: 6.98}
+  - {x: 0.13, y: 6.31}
 --- !u!212 &212199831718071166
 SpriteRenderer:
   m_ObjectHideFlags: 1

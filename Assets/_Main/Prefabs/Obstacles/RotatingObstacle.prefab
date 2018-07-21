@@ -21,9 +21,8 @@ GameObject:
   - component: {fileID: 4472174166924966}
   - component: {fileID: 212492372199699656}
   - component: {fileID: 61512596210164646}
-  - component: {fileID: 114210464098944532}
   - component: {fileID: 114221828748738508}
-  - component: {fileID: 114609310923676486}
+  - component: {fileID: 114149544015150234}
   m_Layer: 0
   m_Name: RotatingObstacle
   m_TagString: Untagged
@@ -69,7 +68,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.28, y: 1.28}
   m_EdgeRadius: 0
---- !u!114 &114210464098944532
+--- !u!114 &114149544015150234
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,9 +76,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1138627293978710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e8ad49e6f12fed42899ea8a66dc6944, type: 3}
+  m_Script: {fileID: 11500000, guid: df502589e4d492a47a617660ea8ea1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSpeed: 10
 --- !u!114 &114221828748738508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,19 +116,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114609310923676486
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1138627293978710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60e5bf35dbd9d4447ab8059b62172bed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 50
-  rotateDirection: {x: 0, y: 0, z: 1}
 --- !u!212 &212492372199699656
 SpriteRenderer:
   m_ObjectHideFlags: 1

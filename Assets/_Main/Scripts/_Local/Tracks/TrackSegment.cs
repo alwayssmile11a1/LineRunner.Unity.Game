@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Gamekit2D;
 
@@ -13,29 +12,52 @@ namespace LineRunner
         public Transform endPoint;
 
         [Header("Obstacles")]
+        [Range(0,10)]
+        public int minObstacleCount = 0;
+        [Range(0,10)]
+        public int maxObstacleCount = 1;
+        [Space(5)]
         public Obstacle[] possibleObstacles;
         public Vector2[] possibleObstaclePositions;
+
 
         [HideInInspector]
         public DefaultPoolObject poolObject;
         
 
         protected List<Obstacle> m_Obstacles = new List<Obstacle>();
+        private List<Vector2> m_TempPositions = new List<Vector2>();
 
         public void SpawnObstacles()
         {
             if (possibleObstacles.Length == 0 || possibleObstaclePositions.Length == 0) return;
 
-            Obstacle obstacleToUse = possibleObstacles[Random.Range(0, possibleObstacles.Length)];
-            Vector2 positionToUse = possibleObstaclePositions[Random.Range(0, possibleObstaclePositions.Length)];
+            //Get obstacleCount
+            int obstacleCount = Random.Range(minObstacleCount, maxObstacleCount + 1);
+            if (obstacleCount > possibleObstaclePositions.Length) obstacleCount = possibleObstaclePositions.Length;
 
-            //Spawn obstacle from pool
-            DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(obstacleToUse.gameObject, 1);
-            DefaultPoolObject obstacleObject = poolToUse.Pop((endPoint.position - startPoint.position)* positionToUse.x + Vector3.up * positionToUse.y + startPoint.position);
-            Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
-            obstacle.poolObject = obstacleObject;
-            obstacle.Spawn();
-            m_Obstacles.Add(obstacle);
+            m_TempPositions.Clear();
+            m_TempPositions.InsertRange(0, possibleObstaclePositions);
+            
+            for (int i = 0; i < obstacleCount; i++)
+            {
+                //Get obstacle to use
+                Obstacle obstacleToUse = possibleObstacles[Random.Range(0, possibleObstacles.Length)];
+
+                //Get position to use
+                Vector2 positionToUse = m_TempPositions[Random.Range(0, m_TempPositions.Count)];
+                m_TempPositions.Remove(positionToUse);
+
+                //Spawn obstacle from pool
+                DefaultObjectPool poolToUse = DefaultObjectPool.GetObjectPool(obstacleToUse.gameObject, 1);
+                DefaultPoolObject obstacleObject = poolToUse.Pop((endPoint.position - startPoint.position) * positionToUse.x + Vector3.up * positionToUse.y + startPoint.position);
+                Obstacle obstacle = obstacleObject.transform.GetComponent<Obstacle>();
+                obstacle.poolObject = obstacleObject;
+                obstacle.OnSpawn();
+                m_Obstacles.Add(obstacle);
+            }
+
+
         }
 
         public void RemoveSelf()

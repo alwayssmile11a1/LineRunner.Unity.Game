@@ -64,6 +64,7 @@ public class Line : MonoBehaviour {
         for (int i = 0; i < m_ColliderSegments.Count; i++)
         {
             //Remove collider
+            m_ColliderSegments[i].isTrigger = true;
             m_ColliderSegments[i].size = Vector2.zero;
             m_ColliderSegments.RemoveAt(i);
 
@@ -125,6 +126,12 @@ public class Line : MonoBehaviour {
                     break;
                 }
 
+        }
+
+
+        for (int i = 0; i < m_ColliderSegments.Count; i++)
+        {
+            m_ColliderSegments[i].isTrigger = false;
         }
     }
 
