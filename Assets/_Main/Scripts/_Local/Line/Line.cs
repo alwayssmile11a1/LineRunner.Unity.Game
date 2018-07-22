@@ -15,29 +15,28 @@ public class Line : MonoBehaviour {
     public float distanceBetweenLinePosition = 0.2f;
     public float colliderThickness = 0.1f;
 
-    [Tooltip("Collider for each segment of line")]
-    public CapsuleCollider2D lineColliderSegment;
-
-
+    //[Tooltip("Collider for each segment of line")]
+    //public CapsuleCollider2D lineColliderSegment;
 
     [HideInInspector]
     public DefaultPoolObject linePoolObject;
     public LineRenderer RendereredLine { get; private set; }
     public Rigidbody2D LineBody2D { get; private set; }
+    public EdgeCollider2D LineCollider2D { get; private set; }
 
+    private List<Vector2> m_colliderPoints = new List<Vector2>();
 
-    protected DefaultObjectPool colliderPool;
-    protected List<CapsuleCollider2D> m_ColliderSegments = new List<CapsuleCollider2D>();
-    protected List<DefaultPoolObject> m_ColliderObjects = new List<DefaultPoolObject>();
+    //protected DefaultObjectPool m_ColliderPool;
+    //protected List<CapsuleCollider2D> m_ColliderSegments = new List<CapsuleCollider2D>();
+    //protected List<DefaultPoolObject> m_ColliderObjects = new List<DefaultPoolObject>();
 
 
     protected void Awake()
     {
         RendereredLine = GetComponent<LineRenderer>();
         LineBody2D = GetComponent<Rigidbody2D>();
-
-        colliderPool = DefaultObjectPool.GetObjectPool(lineColliderSegment.gameObject, 2);
-
+        LineCollider2D = GetComponent<EdgeCollider2D>();
+        //colliderPool = DefaultObjectPool.GetObjectPool(lineColliderSegment.gameObject, 2);
     }
 
     protected void OnEnable()
@@ -61,17 +60,20 @@ public class Line : MonoBehaviour {
     {
         RendereredLine.positionCount = 0;
 
-        for (int i = 0; i < m_ColliderSegments.Count; i++)
-        {
-            //Remove collider
-            m_ColliderSegments[i].isTrigger = true;
-            m_ColliderSegments[i].size = Vector2.zero;
-            m_ColliderSegments.RemoveAt(i);
+        m_colliderPoints.Clear();
+        LineCollider2D.points = m_colliderPoints.ToArray();
 
-            //Return to pool
-            m_ColliderObjects[i].ReturnToPool();
-            m_ColliderObjects.RemoveAt(i);
-        }
+        //for (int i = 0; i < m_ColliderSegments.Count; i++)
+        //{
+        //    //Remove collider
+        //    //m_ColliderSegments[i].isTrigger = true;
+        //    m_ColliderSegments[i].size = Vector2.zero;
+        //    m_ColliderSegments.RemoveAt(i);
+
+        //    //Return to pool
+        //    m_ColliderObjects[i].ReturnToPool();
+        //    m_ColliderObjects.RemoveAt(i);
+        //}
     }
 
     public void AddDrawingPoint(Vector3 position)
@@ -90,14 +92,17 @@ public class Line : MonoBehaviour {
                 {
                     RendereredLine.positionCount++;
                     RendereredLine.SetPosition(RendereredLine.positionCount - 1, position);
-                    CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, null);
+                    m_colliderPoints.Add(position);
+                    //CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, null);
                 }
                 else //modify line point
                 {
                     RendereredLine.SetPosition(RendereredLine.positionCount - 1, position);
-                    CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, m_ColliderSegments[m_ColliderSegments.Count - 1]);
+                    m_colliderPoints[m_colliderPoints.Count - 1] = position;
+                    //CreateColliderBetweenPoints(RendereredLine.GetPosition(RendereredLine.positionCount - 2), position, m_ColliderSegments[m_ColliderSegments.Count - 1]);
                 }
 
+                SetupCollider();
             }
         }
 
@@ -129,47 +134,52 @@ public class Line : MonoBehaviour {
         }
 
 
-        for (int i = 0; i < m_ColliderSegments.Count; i++)
-        {
-            m_ColliderSegments[i].isTrigger = false;
-        }
+        //for (int i = 0; i < m_ColliderSegments.Count; i++)
+        //{
+        //    m_ColliderSegments[i].isTrigger = false;
+        //}
     }
 
-    /// <summary>
-    /// if modifiedCapsule is set, it will be modified rather than creating new collider 
-    /// </summary>
-    /// <param name="startPosition"></param>
-    /// <param name="endPosition"></param>
-    /// <param name=""></param>
-    /// <returns></returns>
-    private CapsuleCollider2D CreateColliderBetweenPoints(Vector3 startPosition, Vector3 endPosition, CapsuleCollider2D modifiedCapsule)
+    private void SetupCollider()
     {
-
-        CapsuleCollider2D capsuleCollider2D = modifiedCapsule;
-
-        if (modifiedCapsule == null)
-        {
-            ////Create collider segment
-            //GameObject gameObject = new GameObject("Collider");
-            //capsuleCollider2D = gameObject.AddComponent<CapsuleCollider2D>();
-            //capsuleCollider2D.transform.parent = transform;
-
-            DefaultPoolObject colliderObject = colliderPool.Pop((startPosition + endPosition) / 2);
-            capsuleCollider2D = colliderObject.transform.GetComponent<CapsuleCollider2D>();
-            capsuleCollider2D.transform.parent = transform;
-
-            m_ColliderSegments.Add(capsuleCollider2D);
-            m_ColliderObjects.Add(colliderObject);
-
-        }
-
-        Vector3 direction = startPosition - endPosition;
-        capsuleCollider2D.transform.position = (startPosition + endPosition) / 2;
-        capsuleCollider2D.transform.RotateToDirection(direction, 90);
-        capsuleCollider2D.size = new Vector2(colliderThickness, direction.magnitude);
-
-        return capsuleCollider2D;
+        LineCollider2D.points = m_colliderPoints.ToArray();
     }
+
+    ///// <summary>
+    ///// if modifiedCapsule is set, it will be modified rather than creating new collider 
+    ///// </summary>
+    ///// <param name="startPosition"></param>
+    ///// <param name="endPosition"></param>
+    ///// <param name=""></param>
+    ///// <returns></returns>
+    //private CapsuleCollider2D CreateColliderBetweenPoints(Vector3 startPosition, Vector3 endPosition, CapsuleCollider2D modifiedCapsule)
+    //{
+
+    //    CapsuleCollider2D capsuleCollider2D = modifiedCapsule;
+
+    //    if (modifiedCapsule == null)
+    //    {
+    //        ////Create collider segment
+    //        //GameObject gameObject = new GameObject("Collider");
+    //        //capsuleCollider2D = gameObject.AddComponent<CapsuleCollider2D>();
+    //        //capsuleCollider2D.transform.parent = transform;
+
+    //        DefaultPoolObject colliderObject = m_ColliderPool.Pop((startPosition + endPosition) / 2);
+    //        capsuleCollider2D = colliderObject.transform.GetComponent<CapsuleCollider2D>();
+    //        capsuleCollider2D.transform.parent = transform;
+
+    //        m_ColliderSegments.Add(capsuleCollider2D);
+    //        m_ColliderObjects.Add(colliderObject);
+
+    //    }
+
+    //    Vector3 direction = startPosition - endPosition;
+    //    capsuleCollider2D.transform.position = (startPosition + endPosition) / 2;
+    //    capsuleCollider2D.transform.RotateToDirection(direction, 90);
+    //    capsuleCollider2D.size = new Vector2(colliderThickness, direction.magnitude);
+
+    //    return capsuleCollider2D;
+    //}
 
     /// <summary>
     /// Get righestpoint in world space

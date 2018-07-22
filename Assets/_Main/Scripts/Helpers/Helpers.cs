@@ -43,6 +43,22 @@ namespace Gamekit2D
         }
     }
 
+    public static class QuaternionExtension
+    {
+        /// <summary>
+        /// Create a quaternion so that the red axis points towards the specified direction
+        /// the rotationOffset can be used to offset the rotation
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="rotationOffset"></param>
+        public static Quaternion RotateToDirection(Vector2 direction, float rotationOffset = 0)
+        {
+            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            return Quaternion.Euler(0, 0, rotationZ + rotationOffset);
+        }
+    }
+
     public static class TransformExtension
     {
         public static Bounds TransformBounds(this Transform transform, Bounds localBounds)
@@ -82,32 +98,32 @@ namespace Gamekit2D
         }
 
         /// <summary>
-        /// Rotate the transform to a specified direction
-        /// the rotationComparedToHorinzontal can be used to offset the rotation
+        /// Rotate the transform so that the red axis points towards the specified direction
+        /// the rotationOffset can be used to offset the rotation
         /// </summary>
         /// <param name="transform"></param>
         /// <param name="direction"></param>
-        /// <param name="rotationComparedToHorinzontal">0 if it's aligned horizontally and 90 if it's aligned verically</param>
-        public static void RotateToDirection(this Transform transform, Vector2 direction, float rotationComparedToHorinzontal = 0)
+        /// <param name="rotationOffset"></param>
+        public static void RotateToDirection(this Transform transform, Vector2 direction, float rotationOffset = 0)
         {
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
+            transform.rotation = Quaternion.Euler(0, 0, rotationZ + rotationOffset);
 
         }
 
         /// <summary>
-        /// Rotate the transform to a specified position
-        /// the rotationComparedToHorinzontal can be used to offset the rotation
+        /// Rotate the transform so that the red axis points towards the specified position
+        /// the rotationOffset can be used to offset the rotation
         /// </summary>
         /// <param name="transform"></param>
         /// <param name="direction"></param>
-        /// <param name="rotationComparedToHorinzontal">0 if it's aligned horizontally and 90 if it's aligned verically</param>
-        public static void RotateTo(this Transform transform, Vector3 targetPosition, float rotationComparedToHorinzontal = 0)
+        /// <param name="rotationOffset"></param>
+        public static void RotateTo(this Transform transform, Vector3 targetPosition, float rotationOffset = 0)
         {
             Vector3 direction = targetPosition - transform.position;
 
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
+            transform.rotation = Quaternion.Euler(0, 0, rotationZ + rotationOffset);
 
         }
 

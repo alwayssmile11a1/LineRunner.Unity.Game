@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 120060523909648802}
   - component: {fileID: 114019263644005658}
   - component: {fileID: 50509471478393170}
-  m_Layer: 0
+  - component: {fileID: 68519885807314342}
+  m_Layer: 9
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +36,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1815096198221088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -62,6 +63,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!68 &68519885807314342
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815096198221088}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points: []
 --- !u!114 &114019263644005658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,11 +90,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineType: 2
-  maxLinePointCount: 2
+  maxLinePointCount: -1
   distanceBetweenLinePosition: 0.1
   colliderThickness: 0.1
-  lineColliderSegment: {fileID: 70952670903796072, guid: 6c60cbaec5925db4fa1991884f8d3993,
-    type: 2}
 --- !u!120 &120060523909648802
 LineRenderer:
   m_ObjectHideFlags: 1
